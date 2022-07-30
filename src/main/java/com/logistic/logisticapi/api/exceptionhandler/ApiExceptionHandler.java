@@ -1,5 +1,6 @@
 package com.logistic.logisticapi.api.exceptionhandler;
 
+import com.logistic.logisticapi.domain.exception.ValidacaoDeCadastroException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -53,5 +55,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return handleExceptionInternal(ex, mensagemDeErro,headers, status, request);
+    }
+
+    @ExceptionHandler(ValidacaoDeCadastroException.class)
+    public ResponseEntity<Object> handleValidacaoDeCadastroException(ValidacaoDeCadastroException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.valueOf(HttpStatus.BAD_REQUEST.value());
+
+        var mensagemDeErro = new MensagemDeErro(
+                status.value(),
+                LocalDateTime.now(),
+                ex.getMessage()
+        );
+
+        return handleExceptionInternal(ex, mensagemDeErro, new HttpHeaders(), status, request);
     }
 }
