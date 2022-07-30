@@ -1,5 +1,8 @@
 package com.logistic.logisticapi.api.exceptionhandler;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ import java.util.List;
 @ControllerAdvice //anotação para definir a classe controladora de exceptions
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    private MessageSource messageSource;
+
     // substituindo e refazendo o metodo da exception
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -29,8 +35,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             // pegando o nome do campo do erro (usando uma conversão para alterar o tipo de informação)
             String nome = ((FieldError) erro).getField();
 
-            // Pegando a mensagem do erro
-            String mensagem = erro.getDefaultMessage();
+            // Pegando a mensagem padrão do erro
+            //String mensagem = erro.getDefaultMessage();
+
+            // Pegando a mensagem padrão do erro
+            String mensagem = messageSource.getMessage(erro, LocaleContextHolder.getLocale());
 
             erros.add(new MensagemDeErro.InfoErro(nome, mensagem));
 
