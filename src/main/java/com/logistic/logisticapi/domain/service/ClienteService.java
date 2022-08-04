@@ -42,7 +42,7 @@ public class ClienteService {
     @Transactional // declara que o metodo tem que ser executado dentro de uma transação, se algo der errado a transação é descartada
     public Cliente salvarCliente(Cliente cliente) {
 
-        verSeClienteExiste(cliente);
+        verSeClienteExistePorNomeEEmail(cliente);
 
         Cliente clienteSalvo = repository.save(cliente);
         return clienteSalvo;
@@ -72,6 +72,11 @@ public class ClienteService {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Verifica se o cliente existe no banco caso não exibe para o cliente uma mensagem personalizada se existir retorna nullo
+     * @param clienteId
+     * @return retorna uma mensagem de cliente não encontrado caso o cliente não exista
+     */
     private ResponseEntity<ReturnMessage> mensagemDeClienteNaoExiste(Long clienteId) {
         // verifica se o cliente existe
         if (!repository.existsById(clienteId)) {
@@ -88,7 +93,16 @@ public class ClienteService {
         return null;
     }
 
-    private void verSeClienteExiste(Cliente cliente) {
+    /**
+     * Busca o cliente e o retorna, caso não exista dispara uma exeption personalizada de validação de cadastro
+     * @param clienteId - id do cliente
+     * @return - retona o cliente procurado
+     */
+    public Cliente buscarCliente(Long clienteId) {
+        return repository.findById(clienteId).orElseThrow(() -> new ValidacaoDeCadastroException("Cliente não encontrado"));
+    }
+
+    private void verSeClienteExistePorNomeEEmail(Cliente cliente) {
 
         boolean emailEmUso = repository.findByEmail(cliente.getEmail()).stream().anyMatch(clienteExistenteNoBanco -> !clienteExistenteNoBanco.equals(cliente));
 
