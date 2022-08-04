@@ -15,3 +15,6 @@
   - 🔎 Listagem de clientes especificos
   - 📝 Atualizaçõa de dados de clientes 
   - 🗑 Exclusão de Cliente
+
+- **Rota de Clientes**
+  - 📇 Solicitação de nova entrefa (validando dados e ignorando dados não preenchidos pelo cliente)
