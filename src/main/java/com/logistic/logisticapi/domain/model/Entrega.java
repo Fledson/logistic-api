@@ -1,5 +1,6 @@
 package com.logistic.logisticapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,10 +27,14 @@ public class Entrega {
     private BigDecimal taxa;
 
     @Enumerated(EnumType.STRING) // dessa forma será armazenado o nome da constante do enum e não seu numero
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
     private StatusEntrega status;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
     private LocalDateTime dataPedido;
 
+    // -> pode ser configurado como ao inves de ignorar lançar uma exception
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
     private LocalDateTime dataFinalizacao;
 
 }
