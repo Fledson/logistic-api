@@ -23,7 +23,7 @@ public class Entrega {
     @Embedded // usado para abstrair os dados de uma classe em uma mesma tabela -> para funcionar a classe deve ser anotada com @Embeddable
     private Destinatario destinatario;
 
-    private BigDecimal taxaEntrega;
+    private BigDecimal taxa;
 
     @Enumerated(EnumType.STRING) // dessa forma será armazenado o nome da constante do enum e não seu numero
     private StatusEntrega status;

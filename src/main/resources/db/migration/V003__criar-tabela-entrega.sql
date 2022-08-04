@@ -2,7 +2,7 @@ CREATE TABLE entrega (
 	id BIGINT NOT NULL auto_increment,
 	cliente_id BIGINT NOT NULL,
 	taxa DECIMAL ( 10, 2 ) NOT NULL,
-	STATUS VARCHAR ( 20 ) NOT NULL,
+	status VARCHAR ( 20 ) NOT NULL,
 	data_pedido DATETIME NOT NULL,
 	data_finalizacao DATETIME,
 

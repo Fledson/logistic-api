@@ -1,0 +1,34 @@
+package com.logistic.logisticapi.domain.service;
+
+import com.logistic.logisticapi.domain.model.Entrega;
+import com.logistic.logisticapi.domain.model.StatusEntrega;
+import com.logistic.logisticapi.domain.repository.EntregaRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@Service
+public class SolicitacaoEntregaService {
+
+    private EntregaRepository entregaRepository;
+
+    @Transactional
+    public Entrega solicitarNovaEntrega(Entrega entrega) {
+
+        // REGRA DE NEGOCIO AQUI
+        /**
+         * EXEMPOS - REGRA DE REGRAS DE NEGOCIOS QUE PODEM SER IMPLEMENTADAS
+         * - LIMITAÇÃO DE HORARIOS - Determinar que novas entregras só possam ser efetuadas em determinados horarios (08:00 as 18:00)
+         * - DISPONIBILIDADE DE ENTREGA: Verificar se há entregadores disponiveis antes do agendamento (entregas rapidas)
+        */
+
+        entrega.setStatus(StatusEntrega.PENDENTE); // -> por padrão toda entrega assim que iniciada é pendente
+        entrega.setDataPedido(LocalDateTime.now()); // -> data do pedido pega a data da solicitaçaõ da entrega
+
+        return entregaRepository.save(entrega);
+    }
+
+}
