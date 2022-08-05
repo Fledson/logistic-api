@@ -1,5 +1,6 @@
 package com.logistic.logisticapi.domain.model;
 
+import com.logistic.logisticapi.resources.ValidationGroups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -17,6 +19,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class Cliente {
 
+    @NotNull(groups = ValidationGroups.ClientId.class) // validar apenas quando for validado pelo grupo passado
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

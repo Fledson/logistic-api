@@ -19,7 +19,7 @@ public class SolicitacaoEntregaService {
     private ClienteService clienteService;
 
     @Transactional
-    public Entrega solicitarNovaEntrega(Entrega entrega) {
+    public Entrega solicitarNovaEntrega (Entrega entrega) {
 
         // REGRA DE NEGOCIO AQUI
         /**
