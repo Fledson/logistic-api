@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @Service
@@ -33,7 +34,7 @@ public class SolicitacaoEntregaService {
 
         entrega.setCliente(clienteEntrega);
         entrega.setStatus(StatusEntrega.PENDENTE); // -> por padrão toda entrega assim que iniciada é pendente
-        entrega.setDataPedido(LocalDateTime.now()); // -> data do pedido pega a data da solicitaçaõ da entrega
+        entrega.setDataPedido(OffsetDateTime.now()); // -> data do pedido pega a data da solicitaçaõ da entrega
 
         return entregaRepository.save(entrega);
     }

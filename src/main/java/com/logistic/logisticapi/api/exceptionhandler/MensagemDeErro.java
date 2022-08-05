@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,13 +15,13 @@ public class MensagemDeErro {
 
     private Integer statusCode;
 
-    private LocalDateTime data;
+    private OffsetDateTime data;
 
     private String mensagem;
 
     private List<InfoErro> dadosDoErro;
 
-    public MensagemDeErro(Integer statusCode, LocalDateTime data, String mensagem) {
+    public MensagemDeErro(Integer statusCode, OffsetDateTime data, String mensagem) {
         this.statusCode = statusCode;
         this.data = data;
         this.mensagem = mensagem;

@@ -13,6 +13,7 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -43,10 +44,10 @@ public class Entrega {
     private StatusEntrega status;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
-    private LocalDateTime dataPedido;
+    private OffsetDateTime dataPedido;
 
     // -> pode ser configurado como ao inves de ignorar lançar uma exception
     @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
-    private LocalDateTime dataFinalizacao;
+    private OffsetDateTime dataFinalizacao;
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         var mensagemDeErro = new MensagemDeErro(
                 status.value(),
-                LocalDateTime.now(),
+                OffsetDateTime.now(),
                 "Um ou mais campos estão preenchidos incorretamente, por favor verifique as informações passadas e envie novamente",
                 erros
         );
@@ -63,7 +64,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         var mensagemDeErro = new MensagemDeErro(
                 status.value(),
-                LocalDateTime.now(),
+                OffsetDateTime.now(),
                 ex.getMessage()
         );
 
