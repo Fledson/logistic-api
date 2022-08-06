@@ -24,18 +24,12 @@ public class ClienteService {
     }
 
     public Object buscarClientePorID(Long clienteId) {
-
-        // verifica se o cliente existe
-        if (mensagemDeClienteNaoExiste(clienteId) != null) return mensagemDeClienteNaoExiste(clienteId);
-
-        // se existir, busca o cliente no banco e armazena na variavel
-        var clienteBuscado = repository.findById(clienteId);
-
         // retorno o cliente
-        return clienteBuscado; //200
+        return buscarCliente(clienteId); //200
         /**
          * resposta alternativa, com status code porem sem mensagem de retorno
-         * return repository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+         * return repository.findById(id)
+         * .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
          */
     }
 

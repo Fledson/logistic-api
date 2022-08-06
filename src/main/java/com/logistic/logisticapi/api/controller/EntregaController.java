@@ -1,7 +1,6 @@
 package com.logistic.logisticapi.api.controller;
 
-import com.logistic.logisticapi.domain.exception.ValidacaoDeCadastroException;
-import com.logistic.logisticapi.domain.model.Cliente;
+import com.logistic.logisticapi.api.model.EntregaModel;
 import com.logistic.logisticapi.domain.model.Entrega;
 import com.logistic.logisticapi.domain.repository.EntregaRepository;
 import com.logistic.logisticapi.domain.service.EntregaService;
@@ -19,7 +18,6 @@ import java.util.List;
 @RequestMapping("/entregas")
 public class EntregaController {
 
-    private EntregaRepository entregaRepository;
     private SolicitacaoEntregaService solicitacaoEntregaService;
     private EntregaService entregaService;
 
@@ -35,7 +33,7 @@ public class EntregaController {
     }
 
     @GetMapping("/{entregaId}")
-    public Entrega listarEntrega(@PathVariable Long entregaId){
+    public ResponseEntity<EntregaModel> listarEntrega(@PathVariable Long entregaId){
         var entrega = entregaService.buscarEntrega(entregaId);
 
         return entrega;
