@@ -18,7 +18,7 @@
   - 🗑 Exclusão de Cliente
 
 - **Rota de Clientes**
+  > Endpoint de Entregas usando uma representação do modelo de dados, não a classe de entrega (do Domain Model), para garantir melhor segurança na entrega dos dados
   - 📇 Solicitação de nova entrega (validando dados e ignorando dados não preenchidos pelo cliente)
   - 🔍 Consultando todas entrgas
   - 🔎 Consultando entregas especificas
-  - > Endpoint de Entregas usando uma representação do modelo de dados, não a classe de entrega(do Domain Model), para garantir melhor segurança na entrega dos dados
