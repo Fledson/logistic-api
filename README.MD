@@ -5,7 +5,7 @@
 ## 💻 Tecnologias usadas
 - ☕️ [Linguagem de Programação Java](https://docs.oracle.com/en/java/)
 - 🍃 [Spring Framework](http://spring.io/)
-- 🐬 [Mysql Databse](https://dev.mysql.com/doc/refman/8.0/en/)
+- 🐬 [Mysql Database](https://dev.mysql.com/doc/refman/8.0/en/)
 - 🪶 [Flyway](https://flywaydb.org/)
 - 📝 [ModelMapper](http://modelmapper.org/)
 
