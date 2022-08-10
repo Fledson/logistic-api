@@ -2,6 +2,7 @@ package com.logistic.logisticapi.api.controller;
 
 import com.logistic.logisticapi.api.assembler.EntregaAssembler;
 import com.logistic.logisticapi.api.model.EntregaModel;
+import com.logistic.logisticapi.api.model.input.EntregaInputModel;
 import com.logistic.logisticapi.domain.model.Entrega;
 import com.logistic.logisticapi.domain.service.EntregaService;
 import com.logistic.logisticapi.domain.service.SolicitacaoEntregaService;
@@ -24,9 +25,15 @@ public class EntregaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntregaModel solicitarEntrega(@Valid @RequestBody Entrega entrega) {
-        Entrega entregaSolicitada = solicitacaoEntregaService.solicitarNovaEntrega(entrega);
+    public EntregaModel solicitarEntrega(@Valid @RequestBody EntregaInputModel entregaInput) {
+
+        // convertendo o modelo de entrada para um modelo do dominio
+        Entrega novaEntrega = entregaAssembler.toEntity(entregaInput);
+        // passando o modelo de dominio convertido para ser tratado no service do domain
+        Entrega entregaSolicitada = solicitacaoEntregaService.solicitarNovaEntrega(novaEntrega);
+        // retorna um modelo de representação da entrega
         return entregaAssembler.toModel(entregaSolicitada);
+
     }
 
     @GetMapping
