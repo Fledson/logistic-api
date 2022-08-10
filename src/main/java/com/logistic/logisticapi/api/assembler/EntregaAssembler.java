@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Classe responsavel por realizar a conversão de Classes do Domain Model para o Representation Model
  * Aqui está sendo usado o Model Mapper, centralizando para que a API não fique dependente dessa biblioteca
@@ -28,6 +31,12 @@ public class EntregaAssembler {
      */
     public EntregaModel toModel(Entrega entrega) {
         return modelMapper.map(entrega, EntregaModel.class);
+    }
+
+    public List<EntregaModel> toCollectionModel (List<Entrega> entregas) {
+        return entregas.stream()
+                        .map(this::toModel) //-> convertendo cada item da lista para o modelo de representação
+                        .collect(Collectors.toList()); // -> Reduzindo o Stream para uma coleção (List)
     }
 
 }

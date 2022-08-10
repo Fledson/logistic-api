@@ -2,7 +2,6 @@ package com.logistic.logisticapi.api.controller;
 
 import com.logistic.logisticapi.api.model.EntregaModel;
 import com.logistic.logisticapi.domain.model.Entrega;
-import com.logistic.logisticapi.domain.repository.EntregaRepository;
 import com.logistic.logisticapi.domain.service.EntregaService;
 import com.logistic.logisticapi.domain.service.SolicitacaoEntregaService;
 import lombok.AllArgsConstructor;
@@ -23,12 +22,12 @@ public class EntregaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Entrega solicitarEntrega(@Valid @RequestBody Entrega entrega) {
+    public EntregaModel solicitarEntrega(@Valid @RequestBody Entrega entrega) {
         return solicitacaoEntregaService.solicitarNovaEntrega(entrega);
     }
 
     @GetMapping
-    public List<Entrega> listarEntregas() {
+    public List<EntregaModel> listarEntregas() {
         return entregaService.listarTodasEntregas();
     }
 
