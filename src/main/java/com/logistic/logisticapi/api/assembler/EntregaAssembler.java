@@ -1,6 +1,7 @@
 package com.logistic.logisticapi.api.assembler;
 
 import com.logistic.logisticapi.api.model.EntregaModel;
+import com.logistic.logisticapi.api.model.input.EntregaInputModel;
 import com.logistic.logisticapi.domain.model.Entrega;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,10 +34,24 @@ public class EntregaAssembler {
         return modelMapper.map(entrega, EntregaModel.class);
     }
 
+    /**
+     * Converte uma lista do modelo de dominio para uma lista do modelo de representação
+     * @param entregas recebe uma lista de Entrega
+     * @return retorna uma lista convertida para EntregaModel
+     */
     public List<EntregaModel> toCollectionModel (List<Entrega> entregas) {
         return entregas.stream()
                         .map(this::toModel) //-> convertendo cada item da lista para o modelo de representação
                         .collect(Collectors.toList()); // -> Reduzindo o Stream para uma coleção (List)
+    }
+
+    /**
+     * Realiza a transformação de uma Modelo de Representação de entrada para um Modelo de Dominio
+     * @param entrega Recebe um objeto do tipo EntregaInputModel (Modelo de Entrada de Entrega)
+     * @return retorna um Modelo de Entrega do Domain Model
+     */
+    public Entrega toEntity(EntregaInputModel entregaInput) {
+        return modelMapper.map(entregaInput, Entrega.class);
     }
 
 }

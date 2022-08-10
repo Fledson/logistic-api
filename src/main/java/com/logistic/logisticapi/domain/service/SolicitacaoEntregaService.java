@@ -1,7 +1,5 @@
 package com.logistic.logisticapi.domain.service;
 
-import com.logistic.logisticapi.api.assembler.EntregaAssembler;
-import com.logistic.logisticapi.api.model.EntregaModel;
 import com.logistic.logisticapi.domain.model.Entrega;
 import com.logistic.logisticapi.domain.model.StatusEntrega;
 import com.logistic.logisticapi.domain.repository.EntregaRepository;
@@ -21,10 +19,9 @@ public class SolicitacaoEntregaService {
 
     private EntregaRepository entregaRepository;
     private ClienteService clienteService;
-    private EntregaAssembler entregaAssembler; // -> classe que faz a conversão do modelo de dominio para o de representação
 
     @Transactional
-    public EntregaModel solicitarNovaEntrega (Entrega entrega) {
+    public Entrega solicitarNovaEntrega (Entrega entrega) {
 
         // REGRA DE NEGOCIO AQUI
         /**
@@ -40,7 +37,7 @@ public class SolicitacaoEntregaService {
         entrega.setStatus(StatusEntrega.PENDENTE); // -> por padrão toda entrega assim que iniciada é pendente
         entrega.setDataPedido(OffsetDateTime.now()); // -> data do pedido pega a data da solicitaçaõ da entrega
 
-        return entregaAssembler.toModel(entregaRepository.save(entrega));
+        return entregaRepository.save(entrega);
     }
 
 }
