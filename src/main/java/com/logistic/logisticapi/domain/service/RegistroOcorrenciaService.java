@@ -1,5 +1,6 @@
 package com.logistic.logisticapi.domain.service;
 
+import com.logistic.logisticapi.domain.model.Entrega;
 import com.logistic.logisticapi.domain.model.Ocorrencia;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RegistroOcorrenciaService {
 
-    private EntregaService entregaService;
+    private BuscaEntregaService buscaEntregaService;
 
     /**
      * Registra uma nova ocorrencia em uma entrega
@@ -20,7 +21,7 @@ public class RegistroOcorrenciaService {
     @Transactional
     public Ocorrencia registrar(Long entregaId, String descricao) {
         // verifica se o id da entrega repassada existe, se existir tras a entrega
-        var entrega = entregaService.buscarEntrega(entregaId);
+        Entrega entrega = buscaEntregaService.buscar(entregaId);
 
         return entrega.adicionarOcorrencia(descricao);
 

@@ -47,7 +47,7 @@ public class EntregaAssembler {
 
     /**
      * Realiza a transformação de uma Modelo de Representação de entrada para um Modelo de Dominio
-     * @param entrega Recebe um objeto do tipo EntregaInputModel (Modelo de Entrada de Entrega)
+     * @param entregaInput Recebe um objeto do tipo EntregaInputModel (Modelo de Entrada de Entrega)
      * @return retorna um Modelo de Entrega do Domain Model
      */
     public Entrega toEntity(EntregaInputModel entregaInput) {

@@ -1,6 +1,8 @@
 package com.logistic.logisticapi.api.exceptionhandler;
 
+import com.logistic.logisticapi.domain.exception.EntidadeNaoEncontradaException;
 import com.logistic.logisticapi.domain.exception.ValidacaoDeCadastroException;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -65,6 +67,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         var mensagemDeErro = new MensagemDeErro(
                 status.value(),
                 OffsetDateTime.now(),
+                ex.getMessage()
+        );
+
+        return handleExceptionInternal(ex, mensagemDeErro, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<Object> handleEntidadeNaoEncontradaException(ValidacaoDeCadastroException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.valueOf(HttpStatus.NOT_FOUND.value());
+
+        var mensagemDeErro = new MensagemDeErro(
+            status.value(),
+            OffsetDateTime.now(),
                 ex.getMessage()
         );
 
