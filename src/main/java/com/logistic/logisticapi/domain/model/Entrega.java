@@ -14,6 +14,8 @@ import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -41,6 +43,9 @@ public class Entrega {
     @Embedded // usado para abstrair os dados de uma classe em uma mesma tabela -> para funcionar a classe deve ser anotada com @Embeddable
     private Destinatario destinatario;
 
+    @OneToMany(mappedBy = "entrega")
+    private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
 //    @NotNull
     private BigDecimal taxa;
 
@@ -55,4 +60,25 @@ public class Entrega {
 //    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // blindando para que a propriedade não seja escrita via Requisições (SOMENTE LEITURA)
     private OffsetDateTime dataFinalizacao;
 
+    /**
+     * Adiciona uma nova ocorrencia a lista de ocorrencias da entrega
+     * @param descricao Motivo da ocorrencia
+     * @return Retorna o objeto da ocorrencia
+     */
+    public Ocorrencia adicionarOcorrencia(String descricao) {
+        // instanciando uma nova ocorrencia
+        Ocorrencia ocorrencia = new Ocorrencia();
+        // adicionando a descricao
+        ocorrencia.setDescricao(descricao);
+        // adicionando data e hora para a ocorrencia
+        ocorrencia.setDataRegistro(OffsetDateTime.now());
+        // passando a propria entrega para a ocorrencia
+        ocorrencia.setEntrega(this);
+
+        // chamando a ocorrencia desta classe e adicionando a ocorrencia criada a lista
+        this.getOcorrencias().add(ocorrencia);
+
+        // retorna a ocorrencia criada
+        return ocorrencia;
+    }
 }

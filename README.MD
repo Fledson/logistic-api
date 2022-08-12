@@ -22,3 +22,14 @@
   - 📇 Solicitação de nova entrega (validando dados e ignorando dados não preenchidos pelo cliente)
   - 🔍 Consultando todas entrgas
   - 🔎 Consultando entregas especificas
+    
+  - HTML
+    CSS
+    JavaScript
+    Spring boot
+    Spring MVC
+    Spring Data
+    Thymeleaf
+    Bootstrap
+    JQuery
+    AJAX
