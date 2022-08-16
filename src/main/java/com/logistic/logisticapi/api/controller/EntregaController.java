@@ -4,7 +4,9 @@ import com.logistic.logisticapi.api.assembler.EntregaAssembler;
 import com.logistic.logisticapi.api.model.EntregaModel;
 import com.logistic.logisticapi.api.model.input.EntregaInputModel;
 import com.logistic.logisticapi.domain.model.Entrega;
+import com.logistic.logisticapi.domain.service.CancelamentoEntregaService;
 import com.logistic.logisticapi.domain.service.EntregaService;
+import com.logistic.logisticapi.domain.service.FinalizacaoEntregaService;
 import com.logistic.logisticapi.domain.service.SolicitacaoEntregaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import java.util.List;
 public class EntregaController {
 
     private SolicitacaoEntregaService solicitacaoEntregaService;
+    private FinalizacaoEntregaService finalizacaoEntregaService;
+    private CancelamentoEntregaService cancelamentoEntregaService;
     private EntregaService entregaService;
     private EntregaAssembler entregaAssembler; // -> classe que faz a conversão do modelo de dominio para o de representação
 
@@ -47,5 +51,16 @@ public class EntregaController {
         return ResponseEntity.ok(entrega);
     }
 
+    @PutMapping("/{entregaId}/finalizacao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finalizar(@PathVariable Long entregaId) {
+        finalizacaoEntregaService.finalizar(entregaId);
+    }
+
+    @PutMapping("/{entregaId}/cancelamento")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelar(@PathVariable Long entregaId) {
+        cancelamentoEntregaService.cancelar(entregaId);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.logistic.logisticapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.logistic.logisticapi.domain.exception.ValidacaoDeCadastroException;
 import com.logistic.logisticapi.resources.ValidationGroups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -81,4 +82,35 @@ public class Entrega {
         // retorna a ocorrencia criada
         return ocorrencia;
     }
+
+    public void finalizar() {
+
+        if (naoPodeSerFinalizada()) {
+            throw new ValidacaoDeCadastroException("A entrega não pode ser encerrada, apenas entregas pendentes podem ser encerradas!");
+        }
+
+        setStatus(StatusEntrega.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+    }
+
+    public void cancelar() {
+
+        if (naoPodeSerFinalizada()) {
+            throw new ValidacaoDeCadastroException(("A entrega não pode ser cancelada, apenas entregas pendentes podem ser encerradas!"));
+        }
+
+        setStatus(StatusEntrega.CANCELADA);
+        setDataFinalizacao(OffsetDateTime.now());
+
+    }
+
+    public boolean podeSerFinalizada() {
+        return StatusEntrega.PENDENTE.equals(getStatus());
+    }
+
+    public boolean naoPodeSerFinalizada() {
+        return !podeSerFinalizada();
+    }
+
+
 }
