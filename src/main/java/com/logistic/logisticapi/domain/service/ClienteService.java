@@ -18,11 +18,20 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public ResponseEntity<List<Cliente>> listarClientes() {
+    /**
+     * Usa o repository do JPA para buscar no banco de dados todos os clientes cadastrados
+     * @return Retorna um staqtus code 201 se tiver tudo certo e no corpo da requisição uma lista de Clientes
+     */
+    public List<Cliente> listarClientes() {
         var clientes = repository.findAll();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clientes); // 200
+        return clientes;
     }
 
+    /**
+     * Busca um cliente especifico usando o JPA mas aciona um erro caso não exista
+     * @param clienteId Id do cliente buscado
+     * @return Retorna um objeto do tipo Cliente caso exista
+     */
     public Object buscarClientePorID(Long clienteId) {
         // retorno o cliente
         return buscarCliente(clienteId); //200
@@ -33,6 +42,11 @@ public class ClienteService {
          */
     }
 
+    /**
+     * Faz um cadastro de um novo cliente no banco de dados
+     * @param cliente Objeto cliente a ser salvo
+     * @return Retorna o cliente salvo
+     */
     @Transactional // declara que o metodo tem que ser executado dentro de uma transação, se algo der errado a transação é descartada
     public Cliente salvarCliente(Cliente cliente) {
 
@@ -42,6 +56,12 @@ public class ClienteService {
         return clienteSalvo;
     }
 
+    /**
+     * Atualiza os dados de um determinado cliente repassado pelo ID,
+     * @param clienteId Id do cliente que deseja atualizar
+     * @param clienteAtualizado Objeto cliente com os novos dados do cliente
+     * @return Retorna o cliente atualizado, ha retorno se houver erro (dispara um erro de cliente não encontrado)
+     */
     @Transactional
     public Object atualizarDadosDoCliente(Long clienteId, Cliente clienteAtualizado) {
 
@@ -53,17 +73,22 @@ public class ClienteService {
         // atualiza is dados do cliente
         clienteAtualizado = salvarCliente(clienteAtualizado);
 
-        // retorna o cliente com o statusCode 200
-        return ResponseEntity.ok(clienteAtualizado);
+        // retorna o cliente
+        return clienteAtualizado;
     }
 
+    /**
+     * Deleta o cliente passado
+     * @param clienteId Id do cliente que deseja deletar
+     * @return Só ha retorno se houver erro (dispara um erro de cliente não encontrado)
+     */
     @Transactional
     public Object deletarCliente(Long clienteId) {
         if (mensagemDeClienteNaoExiste(clienteId) != null) return mensagemDeClienteNaoExiste(clienteId);
 
         repository.deleteById(clienteId);
 
-        return ResponseEntity.noContent().build();
+        return null;
     }
 
     /**
@@ -96,12 +121,18 @@ public class ClienteService {
         return repository.findById(clienteId).orElseThrow(() -> new ValidacaoDeCadastroException("Cliente não encontrado"));
     }
 
+    /**
+     * Metodo que verifica se um cliente existe no banco com mesmo nome repassado ou o mesmo email
+     * @param cliente Cliente a ser verificado
+     */
     private void verSeClienteExistePorNomeEEmail(Cliente cliente) {
 
+        // verificando no banco se já existe um cliente com esse email (usando a API steam para percorrer os cliente e fazer uma comparação)
         boolean emailEmUso = repository.findByEmail(cliente.getEmail()).stream().anyMatch(clienteExistenteNoBanco -> !clienteExistenteNoBanco.equals(cliente));
-
+        // verificando no banco se já existe um cliente com esse nome (usando a API steam para percorrer os cliente e fazer uma comparação)
         boolean nomeEmUso = repository.findByNome(cliente.getNome()).stream().anyMatch(clienteExistenteNoBanco -> !clienteExistenteNoBanco.equals(cliente));
 
+        // Verificando e acionando os erros
         if (emailEmUso) {
             throw new ValidacaoDeCadastroException("Já Existe um cliente cadastrado com estes dados de e-mail");
         } else if (nomeEmUso){
